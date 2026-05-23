@@ -1,39 +1,64 @@
-const CACHE_NAME = 'crop-detector-v1';
+const CACHE_NAME = 'mimeahub-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
+    './dashboard.html',
     './styles.css',
     './db.js',
+    './auth.js',
     './app.js',
     './model/model.json',
     './model/weights.bin',
     './model/metadata.json',
     'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs',
-    'https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.3/dist/teachablemachine-image.min.js'
+    'https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.3/dist/teachablemachine-image.min.js',
+    'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap'
 ];
 
-// 1. Install Event - Cache all structural files and the model matrix
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            console.log('Caching offline assets and AI model files...');
-            return cache.addAll(ASSETS_TO_CACHE);
+            console.log('Caching assets...');
+            return cache.addAll(ASSETS_TO_CACHE).catch(err => {
+                console.log('Cache addAll error:', err);
+            });
         })
     );
 });
 
-// 2. Activate Event - Clean up older caches if updates happen
 self.addEventListener('activate', (event) => {
-    event.waitUntil(self.clients.claim());
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.filter(name => name !== CACHE_NAME)
+                    .map(name => caches.delete(name))
+            );
+        }).then(() => self.clients.claim())
+    );
 });
 
-// 3. Fetch Event - Intercept requests and serve from cache if offline
 self.addEventListener('fetch', (event) => {
+    if (event.request.method !== 'GET') return;
+    
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
-            // Return cached asset if found, otherwise try fetching from network
-            return cachedResponse || fetch(event.request).catch(() => {
-                // Optional: Fallback UI handling when both fail
+            if (cachedResponse) return cachedResponse;
+            
+            return fetch(event.request).then(response => {
+                if (!response || response.status !== 200 || response.type !== 'basic') {
+                    return response;
+                }
+                
+                const responseToCache = response.clone();
+                caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, responseToCache);
+                });
+                
+                return response;
+            }).catch(() => {
+                if (event.request.destination === 'document') {
+                    return caches.match('./index.html');
+                }
             });
         })
     );

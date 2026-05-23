@@ -3,169 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MimeaHub — Tactical Edge Diagnostics</title>
+    <title>MimeaHub — AI-Powered Plant Disease Detection</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🌱</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.3/dist/teachablemachine-image.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 </head>
-<body>
-
-    <div class="dashboard-shell">
-        
-        <header class="app-navbar">
+<body class="landing-page">
+    
+    <!-- Navigation -->
+    <nav class="landing-nav">
+        <div class="nav-container">
             <div class="nav-brand">
-                <svg class="brand-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 22C2 13 6 4 14 2C14 2 13 7 8 11C18 10 22 16 22 22C13 22 2 22 2 22Z" fill="url(#leaf-gradient)"/>
-                    <defs>
-                        <linearGradient id="leaf-gradient" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#38bdf8"/>
-                            <stop offset="1" stop-color="#34d399"/>
-                        </linearGradient>
-                    </defs>
+                <svg class="brand-logo" viewBox="0 0 32 32" fill="none">
+                    <path d="M16 2L4 9L16 16L28 9L16 2Z" fill="#3fb950"/>
+                    <path d="M4 23L16 30L28 23" stroke="#58a6ff" stroke-width="2.5"/>
+                    <path d="M4 16L16 23L28 16" stroke="#58a6ff" stroke-width="2.5"/>
+                    <circle cx="16" cy="16" r="4" fill="#bc8cff"/>
                 </svg>
-                <div class="brand-details">
-                    <h1>MimeaHub</h1>
-                    <p>v4.0-Edge | Decentralized Vision</p>
-                </div>
+                <span class="brand-name">MimeaHub</span>
             </div>
-            
-            <div class="nav-actions">
-                <button id="theme-toggle" class="theme-pill" aria-label="Toggle Theme">
-                    <span class="icon-light">☀️</span>
-                    <span class="icon-dark">🌙</span>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About</a>
+                <button class="btn btn-primary" onclick="showAuthModal()">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">🌱 AI-Powered Plant Healthcare</div>
+            <h1 class="hero-title">
+                Diagnose Plant Diseases
+                <span class="gradient-text">Instantly & Accurately</span>
+            </h1>
+            <p class="hero-description">
+                Upload a photo or use your camera to identify crop diseases in seconds. 
+                Get treatment recommendations powered by advanced machine learning.
+            </p>
+            <div class="hero-actions">
+                <button class="btn btn-primary btn-large" onclick="showAuthModal()">
+                    Start Free Diagnosis
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7 5L13 10L7 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
-                <select id="language-select" class="lang-pill">
-                    <option value="en">EN</option>
-                    <option value="sw">SW</option>
-                </select>
-                <div class="notification-bell">🔔</div>
+                <button class="btn btn-secondary btn-large" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+                    Learn More
+                </button>
             </div>
-        </header>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Diseases Detected</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Accuracy Rate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Farmers Helped</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-mockup">
+                <div class="mockup-screen">
+                    <div class="mockup-header">
+                        <div class="mockup-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="mockup-content">
+                        <div class="mockup-plant">🌿</div>
+                        <div class="mockup-scanning">Scanning plant...</div>
+                        <div class="mockup-result">
+                            <div class="mockup-check">✓</div>
+                            <div>Healthy Plant Detected</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <main class="console-grid">
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">Why Choose MimeaHub?</h2>
+        <p class="section-subtitle">Powerful features designed for modern agriculture</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h3>Real-Time Detection</h3>
+                <p>Get instant disease diagnosis using your camera or uploaded images with our advanced AI model.</p>
+            </div>
             
-            <section class="card vision-deck">
-                <h3 class="panel-title">Vision Control Deck</h3>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Works Offline</h3>
+                <p>Full functionality without internet connection. Perfect for remote field locations.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💊</div>
+                <h3>Treatment Guides</h3>
+                <p>Receive organic, chemical, and preventive treatment recommendations for each disease.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analytics Dashboard</h3>
+                <p>Track disease patterns and monitor crop health trends over time.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Multilingual Support</h3>
+                <p>Available in English and Kiswahili to serve diverse farming communities.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Privacy First</h3>
+                <p>Your data stays on your device. No cloud uploads required for diagnosis.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works-section">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to diagnose your plants</p>
+        
+        <div class="steps-container">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <h3>Capture or Upload</h3>
+                <p>Take a photo of the affected plant or upload an existing image</p>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <h3>AI Analysis</h3>
+                <p>Our model processes the image and identifies potential diseases</p>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <h3>Get Results</h3>
+                <p>Receive diagnosis, confidence score, and treatment recommendations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeAuthModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+            
+            <div id="login-form" class="auth-form">
+                <h2>Welcome Back</h2>
+                <p>Sign in to access your dashboard</p>
                 
-                <div class="viewport-wrapper">
-                    <div class="camera-hud-reticle"></div>
-                    <div class="camera-scan-line"></div>
-                    <div class="camera-corner-brackets"></div>
-                    
-                    <video id="webcam" autoplay playsinline muted class="hidden"></video>
-                    <img id="image-preview" class="hidden" alt="Crop Preview">
-                    <canvas id="processing-canvas" class="hidden"></canvas>
-                    
-                    <div id="placeholder-text" class="stage-placeholder">
-                        <span class="pulse-radar"></span>
-                        <p>Camera inactive. Ready to stream live video feeds or analyze file asset uploads.</p>
-                    </div>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="farmer@example.com">
                 </div>
-
-                <div id="zoom-container" class="digital-zoom-bar hidden">
-                    <div class="zoom-meta">
-                        <span>Digital Zoom</span>
-                        <span id="zoom-value" class="mono">1.0x</span>
-                    </div>
-                    <input type="range" id="zoom-slider" min="1" max="3" step="0.1" value="1" class="custom-slider">
-                </div>
-
-                <div class="button-deck">
-                    <button id="btn-webcam" class="btn btn-blue">Washa Kamera / Start Webcam</button>
-                    <button id="btn-capture" class="btn btn-green hidden">Run Diagnostic Scan</button>
-                    
-                    <div class="file-trigger">
-                        <label for="file-upload" class="btn btn-glass">Analyze File Upload</label>
-                        <input type="file" id="file-upload" accept="image/*" style="display:none;">
-                    </div>
-                </div>
-            </section>
-
-            <section class="card report-engine glow-blue">
-                <h3 class="panel-title">Report Engine</h3>
-                <div id="status" class="engine-status-pulse">Engine Online</div>
                 
-                <div id="prediction-result" class="report-view-stack">
-                    <div class="hero-diagnosis-box">
-                        <div class="diagnosis-text">
-                            <span class="subtext-caps">Diagnosis:</span>
-                            <h2 id="disease-name">TOMATO BLIGHT</h2>
-                        </div>
-                        <div class="radial-progress-container">
-                            <svg class="radial-svg" viewBox="0 0 36 36">
-                                <path class="radial-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                <path id="ring-progress-fill" class="radial-fill" stroke-dasharray="79, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            </svg>
-                            <div id="confidence-level" class="radial-percentage mono">79%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="location-row">
-                        <span class="geo-badge">📍 <span id="location-display">Nairobi, KE</span></span>
-                    </div>
-
-                    <div class="treatment-protocols">
-                        <h4>Treatments</h4>
-                        
-                        <div class="rx-strip organic-strip">
-                            <div class="rx-indicator"></div>
-                            <div class="rx-body">
-                                <h5>Organic</h5>
-                                <p id="treatment-organic">Apply copper-based fungicides early in the morning cycle.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="rx-strip chemical-strip">
-                            <div class="rx-indicator"></div>
-                            <div class="rx-body">
-                                <h5>Chemical</h5>
-                                <p id="treatment-chemical">Utilize chlorothalonil applications matching local guidelines.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="rx-strip prevention-strip">
-                            <div class="rx-indicator"></div>
-                            <div class="rx-body">
-                                <h5>Prevention</h5>
-                                <p id="treatment-prevention">Ensure clean air circulation space and manage lower leaf trimming.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button id="btn-export-report" class="btn-action-whatsapp">Copy WhatsApp Field Report</button>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password">
                 </div>
-            </section>
-
-            <section class="column-right-stack">
                 
-                <div class="card history-card glow-green">
-                    <div class="history-header">
-                        <h3 id="lbl-history" class="panel-title" style="margin: 0;">Metrics & Analytics Deck</h3>
-                        <button id="btn-clear-history" class="btn-wipe">Clear History</button>
-                    </div>
-                    
-                    <h4 class="mini-section-title">Transactional History</h4>
-                    <input type="text" id="search-history" class="console-search" placeholder="search by disease or coordinates">
-                    
-                    <div id="history-list" class="ledger-scroller">
-                        </div>
+                <button class="btn btn-primary btn-full" onclick="handleLogin()">Sign In</button>
+                
+                <p class="auth-switch">
+                    Don't have an account? 
+                    <a href="#" onclick="switchAuthForm('register')">Create one</a>
+                </p>
+            </div>
+
+            <div id="register-form" class="auth-form hidden">
+                <h2>Create Account</h2>
+                <p>Join thousands of farmers using MimeaHub</p>
+                
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" placeholder="John Doe">
                 </div>
-
-                <div class="card analytics-card">
-                    <h3 id="lbl-analytics" class="panel-title">Macro Analytics</h3>
-                    <div id="analytics-chart-container" class="chart-bars-stack">
-                        </div>
+                
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" placeholder="farmer@example.com">
                 </div>
-
-            </section>
-
-        </main>
+                
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" placeholder="Create a password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-confirm">Confirm Password</label>
+                    <input type="password" id="register-confirm" placeholder="Confirm your password">
+                </div>
+                
+                <button class="btn btn-primary btn-full" onclick="handleRegister()">Create Account</button>
+                
+                <p class="auth-switch">
+                    Already have an account? 
+                    <a href="#" onclick="switchAuthForm('login')">Sign in</a>
+                </p>
+            </div>
+        </div>
     </div>
 
-    <script src="db.js"></script>
-    <script src="app.js"></script>
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>MimeaHub</h3>
+                <p>Empowering farmers with AI-driven plant disease detection</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#">Pricing</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MimeaHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
 </body>
 </html>
